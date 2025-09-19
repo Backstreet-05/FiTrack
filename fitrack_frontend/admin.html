@@ -1,0 +1,405 @@
+<!-- full admin.html content, with only the required changes -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Admin Panel - FitRack</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 text-gray-800 min-h-screen">
+    <!-- Header -->
+    <header class="bg-purple-600 text-white p-5 shadow-md">
+      <div class="max-w-6xl mx-auto flex justify-between items-center">
+        <h1 class="text-2xl font-bold">Admin Dashboard</h1>
+        <button
+          onclick="window.location.href='index.html'"
+          class="bg-white text-purple-600 px-4 py-2 rounded hover:bg-gray-200"
+        >
+          Logout
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto p-6">
+      <!-- Tab Navigation -->
+      <div class="flex flex-wrap gap-4 mb-6">
+        <button
+          class="tab-btn bg-gray-300 text-gray-800 px-4 py-2 rounded"
+          onclick="switchTab('users', event)"
+        >
+          Users
+        </button>
+        <button
+          class="tab-btn bg-gray-300 text-gray-800 px-4 py-2 rounded"
+          onclick="switchTab('employees', event)"
+        >
+          Employees
+        </button>
+        <button
+          class="tab-btn bg-gray-300 text-gray-800 px-4 py-2 rounded"
+          onclick="switchTab('bookings', event)"
+        >
+          Court Bookings
+        </button>
+        <button
+          class="tab-btn bg-gray-300 text-gray-800 px-4 py-2 rounded"
+          onclick="switchTab('equipment', event)"
+        >
+          Equipment
+        </button>
+      </div>
+
+      <!-- Tab Panels -->
+      <div id="users" class="tab-panel">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-semibold">Registered Users</h2>
+          <!-- <button
+            onclick="openInsertForm('user')"
+            class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+          >
+            Insert
+          </button> -->
+        </div>
+        <table class="w-full text-sm bg-white rounded shadow-md">
+          <thead>
+            <tr class="bg-purple-100 text-left">
+              <th class="p-3">User ID</th>
+              <th class="p-3">First Name</th>
+              <th class="p-3">Last Name</th>
+              <th class="p-3">Age</th>
+              <th class="p-3">Phone No</th>
+              <!--<th class="p-3">Membership ID</th>-->
+              <th class="p-3">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="userTable"></tbody>
+        </table>
+      </div>
+
+      <div id="employees" class="tab-panel hidden">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-semibold">Employees</h2>
+          <!-- <button
+            onclick="openInsertForm('employee')"
+            class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+          >
+            Insert
+          </button> -->
+        </div>
+        <table class="w-full text-sm bg-white rounded shadow-md">
+          <thead>
+            <tr class="bg-purple-100 text-left">
+              <th class="p-3">E_ID</th>
+              <th class="p-3">Name</th>
+              <th class="p-3">DOB</th>
+              <th class="p-3">Phone No</th>
+              <th class="p-3">Salary</th>
+              <th class="p-3">Start Date</th>
+              <th class="p-3">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="employeeTable"></tbody>
+        </table>
+      </div>
+
+      <div id="bookings" class="tab-panel hidden">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-semibold">Court Bookings</h2>
+          <!-- <button
+            onclick="openInsertForm('court')"
+            class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+          >
+            Insert
+          </button> -->
+        </div>
+        <table class="w-full text-sm bg-white rounded shadow-md">
+          <thead>
+            <tr class="bg-purple-100 text-left">
+              <th class="p-3">Name</th>
+              <th class="p-3">Date</th>
+              <th class="p-3">Duration (hrs)</th>
+              <th class="p-3">Court</th>
+            </tr>
+          </thead>
+
+          <tbody id="bookingTable"></tbody>
+        </table>
+      </div>
+
+      <div id="equipment" class="tab-panel hidden">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-semibold">Equipment</h2>
+          <button
+            onclick="openInsertForm('equipment')"
+            class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+          >
+            Insert
+          </button>
+        </div>
+        <table class="w-full text-sm bg-white rounded shadow-md">
+          <thead>
+            <tr class="bg-purple-100 text-left">
+              <th class="p-3">EQ_ID</th>
+              <th class="p-3">Name</th>
+              <th class="p-3">Purchase Date</th>
+              <th class="p-3">Service Date</th>
+              <th class="p-3">Facility ID</th>
+              <th class="p-3">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="equipmentTable"></tbody>
+        </table>
+      </div>
+    </main>
+    <!-- Equipment Insert Form Modal -->
+    <div
+      id="equipmentFormModal"
+      class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center hidden z-50"
+    >
+      <div class="bg-white p-6 rounded shadow-md w-full max-w-md">
+        <h2 class="text-xl font-semibold mb-4">Add Equipment</h2>
+        <form id="equipmentForm">
+          <div class="mb-3">
+            <label class="block mb-1">Name</label>
+            <input
+              type="text"
+              name="name"
+              required
+              class="w-full border px-3 py-2 rounded"
+            />
+          </div>
+          <div class="mb-3">
+            <label class="block mb-1">Purchase Date</label>
+            <input
+              type="date"
+              name="purchaseDate"
+              required
+              class="w-full border px-3 py-2 rounded"
+            />
+          </div>
+          <div class="mb-3">
+            <label class="block mb-1">Service Date</label>
+            <input
+              type="date"
+              name="serviceDate"
+              required
+              class="w-full border px-3 py-2 rounded"
+            />
+          </div>
+          <div class="mb-4">
+            <label class="block mb-1">Facility ID</label>
+            <input
+              type="number"
+              name="facilityId"
+              required
+              class="w-full border px-3 py-2 rounded"
+            />
+          </div>
+          <div class="flex justify-end space-x-2">
+            <button
+              type="button"
+              onclick="closeEquipmentForm()"
+              class="bg-gray-300 px-4 py-2 rounded"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+            >
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      function switchTab(tab, event) {
+        document
+          .querySelectorAll(".tab-panel")
+          .forEach((panel) => panel.classList.add("hidden"));
+        document
+          .querySelectorAll(".tab-btn")
+          .forEach((btn) =>
+            btn.classList.remove("bg-purple-600", "text-white")
+          );
+        document.getElementById(tab).classList.remove("hidden");
+        event.target.classList.add("bg-purple-600", "text-white");
+      }
+
+      function openInsertForm(entity) {
+        if (entity === "equipment") {
+          document
+            .getElementById("equipmentFormModal")
+            .classList.remove("hidden");
+        } else {
+          alert(`Insert form for ${entity} not implemented yet.`);
+        }
+      }
+
+      function closeEquipmentForm() {
+        document.getElementById("equipmentForm").reset();
+        document.getElementById("equipmentFormModal").classList.add("hidden");
+      }
+
+      function editRow(entity, id) {
+        alert(`Edit ${entity} with ID: ${id}`);
+      }
+
+      async function deleteRow(entity, id, event) {
+        if (
+          confirm(`Are you sure you want to delete ${entity} with ID: ${id}?`)
+        ) {
+          try {
+            const response = await fetch(
+              `http://localhost:3000/delete/${entity}/${id}`,
+              {
+                method: "DELETE",
+              }
+            );
+
+            if (response.ok) {
+              const result = await response.json();
+              console.log(result.message);
+
+              const button = event.target;
+              const row = button.closest("tr");
+              if (row) row.remove();
+            } else {
+              const errorText = await response.text();
+              console.error("Server error:", errorText);
+              alert("Failed to delete. Server responded with error.");
+            }
+          } catch (error) {
+            console.error("❌ Error deleting:", error);
+            alert("Something went wrong while deleting.");
+          }
+        }
+      }
+
+      document
+        .getElementById("equipmentForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+          const form = e.target;
+          const newEquipment = {
+            name: form.name.value,
+            purchaseDate: form.purchaseDate.value,
+            serviceDate: form.serviceDate.value,
+            facilityId: form.facilityId.value,
+          };
+
+          try {
+            const res = await fetch("http://localhost:3000/insert/equipment", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(newEquipment),
+            });
+
+            if (res.ok) {
+              alert("Equipment added successfully!");
+              closeEquipmentForm();
+              location.reload();
+            } else {
+              const errText = await res.text();
+              console.error("Server error:", errText);
+              alert("Failed to insert equipment.");
+            }
+          } catch (error) {
+            console.error("Error adding equipment:", error);
+            alert("Something went wrong.");
+          }
+        });
+
+      async function loadData() {
+        try {
+          const users = await fetch("http://localhost:3000/get/users").then(
+            (res) => res.json()
+          );
+          const userTable = document.getElementById("userTable");
+          users.forEach((user) => {
+            userTable.innerHTML += `
+              <tr class="border-b">
+                <td class="p-3">${user.User_ID}</td>
+                <td class="p-3">${user.First_Name}</td>
+                <td class="p-3">${user.Last_Name}</td>
+                <td class="p-3">${user.Age}</td>
+                <td class="p-3">${user.Phone_number}</td>
+                <!--<td class="p-3">${user.Membership_ID}</td>-->
+                <td class="p-3 space-x-2">
+                  <!-- <button class="bg-yellow-400 text-white px-2 py-1 rounded" onclick="editRow('user', ${user.User_ID})">Edit</button> -->
+                  <button class="bg-red-500 text-white px-2 py-1 rounded" onclick="deleteRow('user', ${user.User_ID}, event)">Delete</button>
+                </td>
+              </tr>`;
+          });
+
+          const employees = await fetch(
+            "http://localhost:3000/get/employees"
+          ).then((res) => res.json());
+          const employeeTable = document.getElementById("employeeTable");
+          employees.forEach((emp) => {
+            employeeTable.innerHTML += `
+              <tr class="border-b">
+                <td class="p-3">${emp.Employee_ID}</td>
+                <td class="p-3">${emp.Name}</td>
+                <td class="p-3">${new Date (emp.DOB).toLocaleDateString()}</td>
+                <td class="p-3">${emp.Phone_number}</td>
+                <td class="p-3">${emp.Salary}</td>
+                <td class="p-3">${new Date (emp.Start_Date).toLocaleDateString()}</td>
+                <td class="p-3 space-x-2">
+                  <!--<button class="bg-yellow-400 text-white px-2 py-1 rounded" onclick="editRow('employee', ${emp.Employee_ID})">Edit</button>-->
+                  <button class="bg-red-500 text-white px-2 py-1 rounded" onclick="deleteRow('employee', ${emp.Employee_ID}, event)">Delete</button>
+                </td>
+              </tr>`;
+          });
+
+          // COURT BOOKING TABLE =========
+
+          const bookings = await fetch(
+            "http://localhost:3000/get/bookings"
+          ).then((res) => res.json());
+          const bookingTable = document.getElementById("bookingTable");
+          bookings.forEach((booking) => {
+            bookingTable.innerHTML += `
+    <tr class="border-b">
+      <td class="p-3">${booking.Name}</td>
+      <td class="p-3">${new Date(
+        booking.Date_of_booking
+      ).toLocaleDateString()}</td>
+      <td class="p-3">${booking.Duration}</td>
+      <td class="p-3">${booking.Court_name}</td>
+    </tr>`;
+          });
+
+          const equipment = await fetch(
+            "http://localhost:3000/get/equipment"
+          ).then((res) => res.json());
+          const equipmentTable = document.getElementById("equipmentTable");
+          equipment.forEach((eq) => {
+            equipmentTable.innerHTML += `
+              <tr class="border-b">
+                <td class="p-3">${eq.Eq_ID}</td>
+                <td class="p-3">${eq.Name}</td>
+                <td class="p-3">${eq.Purchase_Date}</td>
+                <td class="p-3">${eq.Service_Date}</td>
+                <td class="p-3">${eq.Facility_ID}</td>
+                <td class="p-3 space-x-2">
+                  <!--<button class="bg-yellow-400 text-white px-2 py-1 rounded" onclick="editRow('equipment', ${eq.Eq_ID})">Edit</button>-->
+                  <button class="bg-red-500 text-white px-2 py-1 rounded" onclick="deleteRow('equipment', ${eq.Eq_ID}, event)">Delete</button>
+                </td>
+              </tr>`;
+          });
+        } catch (err) {
+          console.error("Error loading data:", err);
+        }
+      }
+
+      window.onload = loadData;
+    </script>
+  </body>
+</html>

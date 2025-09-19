@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trainer Schedule - FitRack</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Bootstrap 5 -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <style>
+    body {
+      background: linear-gradient(to right, rgba(220, 38, 38, 0.6), rgba(0, 0, 0, 0.8)),
+                  url('https://as1.ftcdn.net/v2/jpg/03/17/91/76/1000_F_317917629_HjBCyRlH1Hpwwg2HfEbExTdkbyWiGFuN.jpg') no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 20px;
+    }
+
+    h1 {
+      color: white;
+      margin-bottom: 40px;
+      font-weight: bold;
+    }
+
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .trainer-card {
+      background-color: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      padding: 20px;
+      width: 300px;
+      transition: transform 0.2s ease;
+    }
+
+    .trainer-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .trainer-name {
+      font-size: 1.5em;
+      color: white;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .trainer-detail {
+      margin-bottom: 10px;
+      color: #f0f0f0;
+      font-size: 1em;
+    }
+
+    .tag {
+      display: inline-block;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.85em;
+      margin-right: 5px;
+      margin-bottom: 10px;
+    }
+
+    .tag.male { background-color: #dc2626; }
+    .tag.female { background-color: #b91c1c; }
+    .tag.other { background-color: #7f1d1d; }
+
+    .back-button {
+      background-color: #dc2626;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 0.5rem;
+      font-weight: 500;
+      transition: background 0.3s ease;
+      margin-top: 20px;
+      display: inline-block;
+    }
+
+    .back-button:hover {
+      background-color: #b91c1c;
+      text-decoration: none;
+      color: white;
+    }
+  </style>
+</head>
+<body class="flex flex-col items-center justify-center">
+
+  <div class="container mt-5 mb-5">
+    <h1 class="text-4xl text-center">Trainer Daily Schedule</h1>
+    <p class="text-center text-sm text-gray-400 mb-5 italic">
+      "Be fearless in the pursuit of what sets your soul on fire"
+    </p>
+
+    <!-- Container for trainer cards -->
+    <div class="card-container"></div>
+
+    <div class="text-center mt-5">
+      <a href="index.html" class="back-button">Back to Dashboard</a>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      fetch("http://localhost:3000/get/trainers")
+        .then(response => response.json())
+        .then(trainers => {
+          const container = document.querySelector(".card-container");
+          container.innerHTML = ""; // Clear any hardcoded entries
+
+          trainers.forEach(trainer => {
+            const tagClass = trainer.Gender.toLowerCase() === "male"
+              ? "male"
+              : trainer.Gender.toLowerCase() === "female"
+              ? "female"
+              : "other";
+
+            const card = `
+              <div class="trainer-card">
+                <div class="trainer-name">${trainer.Name}</div>
+                <div class="trainer-detail"><span class="tag ${tagClass}">${trainer.Gender}</span></div>
+                <div class="trainer-detail"><strong>Target Goal:</strong> ${trainer.target_goal}</div>
+                <div class="trainer-detail"><strong>Available:</strong> ${trainer.Timings}</div>
+              </div>
+            `;
+            container.insertAdjacentHTML("beforeend", card);
+          });
+        })
+        .catch(err => {
+          console.error("Error loading trainer data:", err);
+        });
+    });
+  </script>
+</body>
+</html>

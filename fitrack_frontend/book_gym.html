@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book Gym Plan - FitRack</title>
+
+    <!-- Tailwind & Bootstrap -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        background: linear-gradient(
+            to right,
+            rgba(220, 38, 38, 0.6),
+            rgba(0, 0, 0, 0.8)
+          ),
+          url("https://png.pngtree.com/thumb_back/fh260/background/20240329/pngtree-rows-of-dumbbells-in-the-gym-image_15662386.jpg")
+            no-repeat center center fixed;
+        background-size: cover;
+        min-height: 100vh;
+        color: white;
+        font-family: "Segoe UI", sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      .main-container {
+        padding: 3rem 2rem;
+        max-width: 1200px;
+        margin: auto;
+      }
+
+      .section-header {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .section-header h2 {
+        font-size: 2.5rem;
+        color: white;
+        font-weight: bold;
+        margin: 0;
+      }
+
+      .card {
+        background-color: rgba(0, 0, 0, 0.75);
+        backdrop-filter: blur(8px);
+        border-radius: 16px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+        transition: transform 0.2s ease;
+        height: 400px; /* Increased from 350px */
+        border: none;
+        color: white;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+      }
+
+      .active-plan {
+        border: 2px solid #dc2626;
+        background-color: rgba(220, 38, 38, 0.2);
+      }
+
+      .plan-img {
+        height: 240px; /* Increased from 200px */
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .plan-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .btn-primary {
+        background-color: #dc2626;
+        border: none;
+        padding: 0.6rem 1.2rem;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .btn-primary:hover {
+        background-color: #b91c1c;
+      }
+
+      .form-control {
+        background-color: rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: white;
+        padding: 0.6rem;
+        border-radius: 8px;
+      }
+
+      .form-control:focus {
+        background-color: rgba(0, 0, 0, 0.7);
+        border-color: #dc2626;
+        box-shadow: 0 0 0 0.25rem rgba(220, 38, 38, 0.25);
+        color: white;
+      }
+
+      .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      label {
+        color: #f0f0f0;
+        font-weight: 500;
+      }
+
+      .back-button {
+        position: fixed;
+        bottom: 20px;
+        left: 30px;
+        background-color: #dc2626;
+        color: white;
+        text-decoration: none;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: background 0.3s ease;
+      }
+
+      .back-button:hover {
+        background-color: #b91c1c;
+        text-decoration: none;
+        color: white;
+      }
+
+      .profile-link {
+        position: fixed;
+        top: 20px;
+        right: 30px;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 8px 12px;
+        border-radius: 8px;
+        z-index: 10;
+      }
+
+      .profile-link span {
+        margin-left: 5px;
+        font-weight: 500;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="profile.html" class="profile-link" title="View Profile">
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png"
+        width="24"
+        alt="Profile"
+      />
+      <span>Profile</span>
+    </a>
+
+    <div class="main-container">
+      <div class="section-header">
+        <h2>Choose Your Gym Plan</h2>
+        <p class="text-center text-sm text-gray-400 mt-2 italic">
+          "Transform your body, elevate your life"
+        </p>
+      </div>
+
+      <!-- Phone Number Input -->
+      <div class="mb-4 max-w-sm mx-auto">
+        <label for="phoneNumber" class="block mb-1"
+          >Enter your registered phone number:</label
+        >
+        <input
+          type="text"
+          id="phoneNumber"
+          class="form-control"
+          placeholder="e.g. 9876543210"
+          required
+        />
+      </div>
+
+      <!-- Grid Layout -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
+        <!-- Card 1 -->
+        <div
+          class="card p-4 rounded"
+          onclick="selectPlan('Weight Loss Plan', this)"
+        >
+          <h4 class="fw-bold text-white">Weight Loss Plan</h4>
+          <p class="text-gray-300">
+            Cardio-based workouts and diet to burn fat effectively.
+          </p>
+          <div class="plan-img mt-2">
+            <img
+              src="https://static.toiimg.com/photo/92751570.cms"
+              alt="Weight Loss Plan"
+            />
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div
+          class="card p-4 rounded"
+          onclick="selectPlan('Muscle Gain Plan', this)"
+        >
+          <h4 class="fw-bold text-white">Muscle Gain Plan</h4>
+          <p class="text-gray-300">
+            Strength and hypertrophy training to build lean muscle.
+          </p>
+          <div class="plan-img mt-2">
+            <img
+              src="https://img.freepik.com/premium-photo/gym-hd-image-gym-photoshoot-gym-stock-photo-fitness-center-workout-exercise-gym-equipment_1012565-28794.jpg"
+              alt="Muscle Gain Plan"
+            />
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div
+          class="card p-4 rounded"
+          onclick="selectPlan('Cardio Fit Plan', this)"
+        >
+          <h4 class="fw-bold text-white">Cardio Fit Plan</h4>
+          <p class="text-gray-300">
+            Endurance, treadmill runs, and functional movements.
+          </p>
+          <div class="plan-img mt-2">
+            <img
+              src="https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg?cs=srgb&dl=pexels-willpicturethis-1954524.jpg&fm=jpg"
+              alt="Cardio Fit Plan"
+            />
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div
+          class="card p-4 rounded"
+          onclick="selectPlan('CrossFit Performance', this)"
+        >
+          <h4 class="fw-bold text-white">CrossFit Performance</h4>
+          <p class="text-gray-300">
+            HIIT, power lifts and athletic drills for serious fitness.
+          </p>
+          <div class="plan-img mt-2">
+            <img
+              src="https://c4.wallpaperflare.com/wallpaper/787/610/414/muscle-press-pose-athlete-workout-hd-wallpaper-preview.jpg"
+              alt="CrossFit Performance Plan"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Confirm Button -->
+      <div class="mt-6 text-center">
+        <button onclick="bookGymPlan()" class="btn btn-primary">
+          Confirm Booking
+        </button>
+      </div>
+    </div>
+
+    <a href="select.html" class="back-button"> &larr; Back to Dashboard </a>
+
+    <script>
+      let selectedPlan = "";
+
+      function selectPlan(planName, cardElement) {
+        selectedPlan = planName;
+
+        // Highlight selected card
+        document.querySelectorAll(".card").forEach((card) => {
+          card.classList.remove("active-plan");
+        });
+        cardElement.classList.add("active-plan");
+      }
+
+      // Booking logic to send data to backend
+      function bookGymPlan() {
+        const phoneNumber = document.getElementById("phoneNumber").value.trim();
+
+        if (!selectedPlan) {
+          alert("Please select a gym plan before booking.");
+          return;
+        }
+
+        if (!phoneNumber || phoneNumber.length < 10) {
+          alert("Please enter a valid phone number.");
+          return;
+        }
+
+        const startDate = new Date().toISOString().split("T")[0];
+        const endDateObj = new Date();
+        endDateObj.setMonth(endDateObj.getMonth() + 6);
+        const endDate = endDateObj.toISOString().split("T")[0];
+
+        fetch("http://localhost:3000/book-gym-plan", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            phoneNumber: phoneNumber,
+            selectedPlan: selectedPlan,
+            startDate: startDate,
+            endDate: endDate,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.message && data.message.includes("✅")) {
+              alert(data.message);
+              localStorage.setItem("gymPlan", selectedPlan);
+            } else {
+              alert(data.message || "❌ Booking failed. Try again.");
+            }
+          })
+
+          .catch((err) => {
+            console.error(err);
+            alert("❌ Server error occurred.");
+          });
+      }
+
+      // Highlight previously selected plan (optional)
+      window.onload = function () {
+        const savedPlan = localStorage.getItem("gymPlan");
+        if (savedPlan) {
+          selectedPlan = savedPlan;
+          document.querySelectorAll(".card").forEach((card) => {
+            if (card.innerText.includes(savedPlan)) {
+              card.classList.add("active-plan");
+            }
+          });
+        }
+      };
+    </script>
+  </body>
+</html>
