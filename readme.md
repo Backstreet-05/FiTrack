@@ -4,12 +4,12 @@ FitRack is a web-based platform that simplifies and digitizes the management of 
 ---
 
 ## Features
-- 🧾 User Registration & Login with role selection
-- 🏋️ Gym Plan Booking (Weight Loss, Muscle Gain, Cardio, CrossFit)
-- 🏀 Court Booking (Tennis, Badminton, Squash, etc.)
-- 👨‍🏫 Trainer Schedule Display
-- 👤 User Profile Dashboard
-- 🛠️ Admin Panel for:
+- User Registration & Login with role selection
+- Gym Plan Booking (Weight Loss, Muscle Gain, Cardio, CrossFit)
+- Court Booking (Tennis, Badminton, Squash, etc.)
+- Trainer Schedule Display
+- User Profile Dashboard
+- Admin Panel for:
   - Viewing users, employees, bookings, equipment
   - Inserting new equipment
   - Deleting records via API
